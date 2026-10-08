@@ -1,0 +1,607 @@
+{
+  "title": "Infrastructure Overview - Icons (NetBox)",
+  "uid": "netbox-infra-icons-v2",
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": true,
+  "refresh": "1m",
+  "graphTooltip": 1,
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "tags": [
+    "netbox",
+    "infra"
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "ds",
+        "label": "NetBox DB",
+        "type": "datasource",
+        "query": "grafana-postgresql-datasource",
+        "refresh": 1,
+        "hide": 0,
+        "current": {}
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Datacenters",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#FF3D9A"
+          },
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${ds}"
+          },
+          "format": "table",
+          "editorMode": "code",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS datacenters FROM dcim_site"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Proxmox Clusters",
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#FF9830"
+          },
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${ds}"
+          },
+          "format": "table",
+          "editorMode": "code",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS clusters FROM virtualization_cluster"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Nodes (Servers)",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#00B8D9"
+          },
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${ds}"
+          },
+          "format": "table",
+          "editorMode": "code",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS nodes FROM dcim_device WHERE cluster_id IS NOT NULL"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Virtual Machines",
+      "gridPos": {
+        "x": 18,
+        "y": 0,
+        "w": 6,
+        "h": 4
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#36B37E"
+          },
+          "unit": "none",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${ds}"
+          },
+          "format": "table",
+          "editorMode": "code",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS vms FROM virtualization_virtualmachine"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "marcusolsson-dynamictext-panel",
+      "title": "Cluster > Node > VM (with IP)",
+      "gridPos": {
+        "x": 0,
+        "y": 4,
+        "w": 16,
+        "h": 24
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${ds}"
+      },
+      "options": {
+        "renderMode": "allRows",
+        "wrap": true,
+        "content": "<div class=\"infra\">{{{data.[0].html}}}</div>",
+        "styles": "\n.infra{display:flex;flex-wrap:wrap;gap:20px;padding:6px;font-family:Inter,Helvetica,Arial,sans-serif}\n.cluster{flex:1 1 460px;background:linear-gradient(160deg,rgba(255,152,48,.16),rgba(255,152,48,.03));border:2px solid #FF9830;border-radius:18px;padding:14px;box-shadow:0 0 22px rgba(255,152,48,.28)}\n.cl-h{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;letter-spacing:1px;color:#FFB45E;margin-bottom:14px;text-transform:uppercase}\n.nodes{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}\n.node{background:linear-gradient(160deg,rgba(0,229,255,.14),rgba(0,229,255,.03));border:1.5px solid #00E5FF;border-radius:14px;padding:10px;box-shadow:0 0 14px rgba(0,229,255,.25)}\n.node-h{display:flex;align-items:center;gap:8px;color:#00E5FF;font-size:16px;margin-bottom:8px}\n.cnt{margin-left:auto;background:#00E5FF;color:#02202a;border-radius:12px;padding:1px 9px;font-size:11px;font-weight:800}\n.vm{display:flex;align-items:center;gap:8px;background:rgba(115,255,77,.10);border-left:4px solid #73FF4D;border-radius:8px;padding:5px 9px;margin-top:6px;font-size:13px}\n.vn{color:#E6FFD9;font-weight:700}\n.ip{margin-left:auto;color:#FFE066;font-family:Consolas,Menlo,monospace;font-size:12px}\n.ic{font-size:20px;line-height:1}\n.empty{color:#8b949e;font-size:12px;padding:4px}\n"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${ds}"
+          },
+          "format": "table",
+          "editorMode": "code",
+          "rawQuery": true,
+          "rawSql": "WITH vm_ip AS (\n  SELECT v.id, v.name, v.device_id, COALESCE(host(pip.address),\n  (SELECT host(a.address) FROM virtualization_vminterface vi\n   JOIN ipam_ipaddress a ON a.assigned_object_id = vi.id\n    AND a.assigned_object_type_id = (SELECT id FROM django_content_type WHERE app_label = 'virtualization' AND model = 'vminterface')\n   WHERE vi.virtual_machine_id = v.id ORDER BY a.id LIMIT 1),\n  'no IP') AS ip\n  FROM virtualization_virtualmachine v\n  LEFT JOIN ipam_ipaddress pip ON pip.id = v.primary_ip4_id\n),\nnode_html AS (\n  SELECT d.cluster_id, d.name,\n    '<div class=\"node\"><div class=\"node-h\"><span class=\"ic\">🖥️</span><b>' || d.name || '</b><span class=\"cnt\">' || COUNT(x.id) || ' VM</span></div>'\n    || COALESCE(string_agg('<div class=\"vm\"><span class=\"ic\">💻</span><span class=\"vn\">' || x.name || '</span><span class=\"ip\">' || x.ip || '</span></div>', '' ORDER BY x.name), '<div class=\"empty\">No VM</div>')\n    || '</div>' AS html\n  FROM dcim_device d LEFT JOIN vm_ip x ON x.device_id = d.id\n  WHERE d.cluster_id IS NOT NULL\n  GROUP BY d.id, d.cluster_id, d.name\n),\ncluster_html AS (\n  SELECT c.name,\n    '<div class=\"cluster\"><div class=\"cl-h\"><span class=\"ic\">☁️</span>' || c.name || '</div><div class=\"nodes\">'\n    || COALESCE(string_agg(n.html, '' ORDER BY n.name), '') || '</div></div>' AS html\n  FROM virtualization_cluster c LEFT JOIN node_html n ON n.cluster_id = c.id\n  GROUP BY c.id, c.name\n)\nSELECT COALESCE(string_agg(html, '' ORDER BY name), '') AS html FROM cluster_html"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "piechart",
+      "title": "VMs per Cluster",
+      "gridPos": {
+        "x": 16,
+        "y": 4,
+        "w": 8,
+        "h": 12
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "pieType": "donut",
+        "displayLabels": [
+          "name",
+          "value"
+        ],
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "bottom",
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
+        "tooltip": {
+          "mode": "single"
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^vms$/",
+          "values": true
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${ds}"
+          },
+          "format": "table",
+          "editorMode": "code",
+          "rawQuery": true,
+          "rawSql": "SELECT c.name AS cluster, COUNT(v.id) AS vms FROM virtualization_cluster c LEFT JOIN virtualization_virtualmachine v ON v.cluster_id = c.id GROUP BY c.name ORDER BY c.name"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "bargauge",
+      "title": "VMs per Node",
+      "gridPos": {
+        "x": 16,
+        "y": 16,
+        "w": 8,
+        "h": 12
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-BlPu"
+          },
+          "min": 0,
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal",
+        "showUnfilled": true,
+        "valueMode": "color",
+        "namePlacement": "left",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${ds}"
+          },
+          "format": "table",
+          "editorMode": "code",
+          "rawQuery": true,
+          "rawSql": "SELECT d.name AS node, COUNT(v.id) AS vms FROM dcim_device d LEFT JOIN virtualization_virtualmachine v ON v.device_id = d.id WHERE d.cluster_id IS NOT NULL GROUP BY d.name ORDER BY d.name"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "geomap",
+      "title": "Datacenter Map",
+      "gridPos": {
+        "x": 0,
+        "y": 28,
+        "w": 12,
+        "h": 12
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${ds}"
+      },
+      "options": {
+        "view": {
+          "id": "fit",
+          "allLayers": true,
+          "zoom": 6,
+          "lat": 23.8,
+          "lon": 90.4
+        },
+        "controls": {
+          "showZoom": true,
+          "mouseWheelZoom": true,
+          "showAttribution": true
+        },
+        "basemap": {
+          "type": "osm-standard",
+          "name": "Basemap"
+        },
+        "tooltip": {
+          "mode": "details"
+        },
+        "layers": [
+          {
+            "type": "markers",
+            "name": "Sites",
+            "tooltip": true,
+            "location": {
+              "mode": "coords",
+              "latitude": "latitude",
+              "longitude": "longitude"
+            },
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "field": "servers",
+                  "min": 16,
+                  "max": 40,
+                  "fixed": 22
+                },
+                "color": {
+                  "fixed": "#FF3D9A"
+                },
+                "opacity": 0.85,
+                "text": {
+                  "mode": "field",
+                  "field": "site",
+                  "fixed": ""
+                },
+                "textConfig": {
+                  "fontSize": 13,
+                  "offsetY": -26,
+                  "textAlign": "center",
+                  "textBaseline": "middle"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${ds}"
+          },
+          "format": "table",
+          "editorMode": "code",
+          "rawQuery": true,
+          "rawSql": "SELECT s.name AS site, s.latitude::float AS latitude, s.longitude::float AS longitude, (SELECT COUNT(*) FROM dcim_device d WHERE d.site_id = s.id) AS servers, (SELECT COUNT(*) FROM virtualization_virtualmachine v WHERE v.site_id = s.id) AS vms FROM dcim_site s WHERE s.latitude IS NOT NULL"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "table",
+      "title": "VM IP List",
+      "gridPos": {
+        "x": 12,
+        "y": 28,
+        "w": 12,
+        "h": 12
+      },
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "${ds}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            }
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "cluster"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FF9830"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "node"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#00E5FF"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "vm"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#73FF4D"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ip"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#FFE066"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "${ds}"
+          },
+          "format": "table",
+          "editorMode": "code",
+          "rawQuery": true,
+          "rawSql": "SELECT c.name AS cluster, d.name AS node, v.name AS vm, COALESCE(host(pip.address),\n  (SELECT host(a.address) FROM virtualization_vminterface vi\n   JOIN ipam_ipaddress a ON a.assigned_object_id = vi.id\n    AND a.assigned_object_type_id = (SELECT id FROM django_content_type WHERE app_label = 'virtualization' AND model = 'vminterface')\n   WHERE vi.virtual_machine_id = v.id ORDER BY a.id LIMIT 1),\n  'no IP') AS ip\nFROM virtualization_virtualmachine v\nLEFT JOIN dcim_device d ON d.id = v.device_id\nLEFT JOIN virtualization_cluster c ON c.id = v.cluster_id\nLEFT JOIN ipam_ipaddress pip ON pip.id = v.primary_ip4_id\nORDER BY 1, 2, 3"
+        }
+      ]
+    }
+  ]
+}
