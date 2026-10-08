@@ -3,7 +3,7 @@
 Visualize your **Datacenter → Proxmox Cluster → Node → VM (with IP)** hierarchy in Grafana, using **NetBox** as the source of truth. No agents, no exporters: Grafana reads the NetBox PostgreSQL database directly (read-only).
 
 > Built for sysadmins who want to answer one question quickly: *"Which VM is on which node, in which cluster, in which datacenter, and what is its IP?"*
-
+![Dashboard overview (demo data)](docs/dashboard-overview.png)
 ## What you get
 
 | Panel | Description |
